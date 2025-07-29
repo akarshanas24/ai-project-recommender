@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>AI Project Recommender Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f0f4f8;
+        }
+        #chat-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        #messages {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 75%;
+        }
+        .user {
+            background-color: #007bff;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+        .bot {
+            background-color: #e5e5ea;
+            color: black;
+            margin-right: auto;
+            text-align: left;
+        }
+        #input-form {
+            display: flex;
+        }
+        #input-text {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+        }
+        #send-btn {
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h2>AI Project Recommender Chat</h2>
+        <div id="messages">
+            <div class="message bot">Welcome! Ask me for project ideas in AI/ML, Web, Mobile, IoT, Data Science, or Blockchain.</div>
+        </div>
+        <form id="input-form">
+            <input type="text" id="input-text" placeholder="Ask about AI projects..." autocomplete="off" required />
+            <button type="submit" id="send-btn">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('input-form');
+        const inputText = document.getElementById('input-text');
+        const messages = document.getElementById('messages');
+
+        function addMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', sender);
+            msgDiv.textContent = text;
+            messages.appendChild(msgDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userText = inputText.value.trim();
+            if (!userText) return;
+
+            addMessage(userText, 'user');
+            inputText.value = '';
+
+            // Send user query to backend
+            fetch('/chatbot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userText })
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessage(data.reply, 'bot');
+            })
+            .catch(() => {
+                addMessage('Error: Could not get response from bot.', 'bot');
+            });
+        });
+    </script>
+</body>
+</html>

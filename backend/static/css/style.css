@@ -1,0 +1,62 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container, .signup-container {
+    max-width: 400px;
+    margin: 60px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+}
+
+h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 24px;
+}
+
+form input[type="text"], form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+
+p {
+    text-align: center;
+    margin-top: 18px;
+}
+
+p a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
