@@ -2,18 +2,229 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up - Project Recommender</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - AI Project Recommender</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .container h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .container p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.2);
+        }
+        
+        .password-group {
+            position: relative;
+        }
+        
+        .password-group .eye-icon {
+            position: absolute;
+            right: 14px;
+            top: 42px;
+            cursor: pointer;
+            color: #667eea;
+            font-size: 18px;
+            user-select: none;
+        }
+        
+        .password-group input {
+            padding-right: 40px;
+        }
+        
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .form-group button:hover {
+            transform: scale(1.02);
+        }
+        
+        .form-group button:active {
+            transform: scale(0.98);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border-left: 4px solid #c33;
+        }
+        
+        .success {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border-left: 4px solid #3c3;
+        }
+    </style>
 </head>
 <body>
-    <div class="signup-container">
-        <h2>Sign Up</h2>
-        <form method="POST" action="/signup">
-            <input type="text" name="username" placeholder="Username" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
-            <button type="submit">Sign Up</button>
+    <div class="container">
+        <h1>Sign Up</h1>
+        <p>Create your account to get started</p>
+        
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        
+        {% if success %}
+            <div class="success">{{ success }}</div>
+        {% endif %}
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="your@email.com"
+                    required
+                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                    title="Please enter a valid email address"
+                >
+            </div>
+            
+            <div class="form-group password-group">
+                <label for="password">Create Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="At least 6 characters"
+                    minlength="6"
+                    required
+                >
+                <span class="eye-icon" onclick="togglePassword('password')">👁️</span>
+            </div>
+            
+            <div class="form-group password-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input 
+                    type="password" 
+                    id="confirm_password" 
+                    name="confirm_password" 
+                    placeholder="Confirm your password"
+                    minlength="6"
+                    required
+                >
+                <span class="eye-icon" onclick="togglePassword('confirm_password')">👁️</span>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit">Create Account</button>
+            </div>
         </form>
-        <p>Already have an account? <a href="/login">Login</a></p>
+        
+        <div class="login-link">
+            Already have an account? <a href="/login">Log in here</a>
+        </div>
     </div>
+
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = event.target;
+            
+            if (!field) return;
+            field.type = (field.type === 'password') ? 'text' : 'password';
+        }
+        
+        // Client-side validation for matching passwords
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm_password').value;
+            
+            if (password !== confirm) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                return false;
+            }
+        });
+    </script>
 </body>
 </html>
