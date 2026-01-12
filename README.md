@@ -144,12 +144,6 @@ This project is licensed under the MIT License - see the [LICENSE](ai-project-re
 - [Ollama](https://ollama.ai/) - Local LLM serving
 - [Bootstrap](https://getbootstrap.com/) - UI framework (if used)
 
-## 📞 Support
-
-If you have any questions or issues:
-
-- Open an issue on GitHub
-- Check the [Wiki](https://github.com/yourusername/ai-project-recommender/wiki) for documentation
-- Join our [Discord](https://discord.gg/yourserver) community
 
 ---
+
