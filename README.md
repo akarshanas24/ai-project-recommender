@@ -142,8 +142,7 @@ This project is licensed under the MIT License - see the [LICENSE](ai-project-re
 - [Flask](https://flask.palletsprojects.com/) - Web framework
 - [MongoDB](https://www.mongodb.com/) - NoSQL database
 - [Ollama](https://ollama.ai/) - Local LLM serving
-- [Bootstrap](https://getbootstrap.com/) - UI framework (if used)
-
 
 ---
+
 
